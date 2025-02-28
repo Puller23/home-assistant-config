@@ -1,0 +1,58 @@
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        file: "www/abfallkalender.ics"
+      customize:
+        - type: 'Gelbe Tonne - Küsterwiese'
+          alias: gelbetonne
+          icon: mdi:trash-can
+        - type: 'Bioabfall - Küsterwiese'
+          alias: bio
+          icon: mdi:recycle
+        - type: 'Restmüll - Küsterwiese'
+          alias: rest
+          icon: mdi:trash-can
+        - type: 'Papier - Küsterwiese'
+          alias: papier
+          icon: mdi:recycle
+  fetch_time: "04:00"
+  day_switch_time: "10:00"
+
+sensor:
+  - platform: waste_collection_schedule
+    name: AbfallRestmuell
+    details_format: "upcoming"
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    types:
+      - rest
+  - platform: waste_collection_schedule
+    name: AbfallGelberSack
+    details_format: "upcoming"
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    types:
+      - gelbetonne
+
+  - platform: waste_collection_schedule
+    name: AbfallBio
+    details_format: "upcoming"
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    types:
+      - bio
+
+  - platform: waste_collection_schedule
+    name: Abfallpapier
+    details_format: "upcoming"
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    types:
+      - papier
+
+  - platform: waste_collection_schedule
+    name: AbfallNaechster
+    details_format: "upcoming"
+    value_template: '{{value.daysTo}}'
+
+  - platform: waste_collection_schedule
+    name: AbfallNaechsterTyp
+    details_format: "upcoming"
+    value_template: '{{value.types}}'

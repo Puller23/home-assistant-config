@@ -1,0 +1,59 @@
+homeassistant:
+  name: Home
+  # latitude: !env_var HASS_LATITUDE
+  # longitude: !env_var HASS_LONGITUDE
+  temperature_unit: C
+  unit_system: metric
+  country: DE
+  time_zone: Europe/Berlin
+  # Load packages
+  packages: !include_dir_named packages
+  allowlist_external_dirs:
+    - /config
+
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+
+# Postgres DB
+recorder:
+  db_url: !env_var HASS_POSTGRES_URL
+
+
+http:
+  ip_ban_enabled: false
+  login_attempts_threshold: 5
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.18.18.0/24
+    - 10.42.0.0/16
+    - 10.43.0.0/16
+    - 10.18.20.0/24
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# Alarmanlage
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    code: !secret alarm_code
+    code_arm_required: false
+    disarm_after_trigger: false
+    arming_time: 60
+    delay_time: 60
+    trigger_time: 4
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      arming_time: 0
+      delay_time: 0
+
+prometheus:
+  namespace: hass

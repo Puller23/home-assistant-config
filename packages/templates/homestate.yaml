@@ -1,0 +1,19 @@
+input_boolean:
+  hausstatus_anwesend:
+    name: Anwesend
+    initial: off
+  hausstatus_abwesend:
+    name: Abwesend
+    initial: off
+  hausstatus_schlafen:
+    name: Anwesend
+    initial: off
+  urlaubsmodus:
+    name: urlaubsmodus
+    initial: off
+  gregorhome:
+    name: gregorhome
+    initial: off
+  nicolehome:
+    name: nicolehome
+    initial: off
